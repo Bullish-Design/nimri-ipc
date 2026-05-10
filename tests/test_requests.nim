@@ -59,4 +59,4 @@ suite "requests tests":
     check u.get().unknownKind == "FutureResponse"
 
   test "action request nesting":
-    check toJson(requestAction(actions.quit())) == parseJson("{\"Action\":\"Quit\"}")
+    check toJson(requestAction(actions.quit())) == parseJson("""{"Action":{"Quit":{"skip_confirmation":false}}}""")

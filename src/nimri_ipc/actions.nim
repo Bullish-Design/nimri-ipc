@@ -23,6 +23,11 @@ type
       args*: seq[string]
     of naSpawnSh:
       command*: string
+    of naQuit:
+      skipConfirmation*: bool
+    of naScreenshot:
+      showPointer*: bool
+      screenshotPath*: Option[string]
     of naFocusWorkspace, naMoveWindowToWorkspace:
       workspaceRef*: WorkspaceRef
     of naSwitchLayout:
@@ -52,9 +57,10 @@ proc moveWindowDown*(): NiriAction = NiriAction(kind: naMoveWindowDown)
 proc moveWindowUp*(): NiriAction = NiriAction(kind: naMoveWindowUp)
 proc moveColumnLeft*(): NiriAction = NiriAction(kind: naMoveColumnLeft)
 proc moveColumnRight*(): NiriAction = NiriAction(kind: naMoveColumnRight)
-proc quit*(): NiriAction = NiriAction(kind: naQuit)
+proc quit*(skipConfirmation: bool = false): NiriAction = NiriAction(kind: naQuit, skipConfirmation: skipConfirmation)
 proc toggleOverview*(): NiriAction = NiriAction(kind: naToggleOverview)
-proc screenshot*(): NiriAction = NiriAction(kind: naScreenshot)
+proc screenshot*(showPointer: bool = false, path: Option[string] = none(string)): NiriAction =
+  NiriAction(kind: naScreenshot, showPointer: showPointer, screenshotPath: path)
 proc powerOffMonitors*(): NiriAction = NiriAction(kind: naPowerOffMonitors)
 
 proc closeWindow*(id: Option[WindowId] = none(WindowId)): NiriAction = NiriAction(kind: naCloseWindow, windowId: id)
@@ -81,16 +87,23 @@ proc toJson*(a: NiriAction): JsonNode =
     }
     encodeStructVariant(ActionWireNames[a.kind], p)
   of naSpawn:
-    encodeStructVariant("Spawn", %a.args)
+    encodeStructVariant("Spawn", %*{"command": %a.args})
   of naSpawnSh:
-    encodeStructVariant("SpawnSh", %a.command)
+    encodeStructVariant("SpawnSh", %*{"command": %a.command})
+  of naQuit:
+    encodeStructVariant("Quit", %*{"skip_confirmation": a.skipConfirmation})
+  of naScreenshot:
+    encodeStructVariant("Screenshot", %*{
+      "show_pointer": a.showPointer,
+      "path": (if a.screenshotPath.isSome: %a.screenshotPath.get() else: newJNull())
+    })
   of naFocusWorkspace, naMoveWindowToWorkspace:
     encodeStructVariant(ActionWireNames[a.kind], %*{"reference": toJson(a.workspaceRef)})
   of naSwitchLayout:
-    encodeStructVariant("SwitchLayout", toJson(a.layoutTarget))
+    encodeStructVariant("SwitchLayout", %*{"layout": toJson(a.layoutTarget)})
   of naSetColumnDisplay:
     let d = if a.columnDisplay == cdTabbed: "Tabbed" else: "Normal"
-    encodeStructVariant("SetColumnDisplay", %d)
+    encodeStructVariant("SetColumnDisplay", %*{"display": d})
   of naMoveFloatingWindow:
     let p = %*{
       "id": (if a.floatWindowId.isSome: toJson(a.floatWindowId.get()) else: newJNull()),
@@ -99,4 +112,4 @@ proc toJson*(a: NiriAction): JsonNode =
     }
     encodeStructVariant("MoveFloatingWindow", p)
   else:
-    encodeUnitVariant(ActionWireNames[a.kind])
+    encodeStructVariant(ActionWireNames[a.kind], newJObject())
