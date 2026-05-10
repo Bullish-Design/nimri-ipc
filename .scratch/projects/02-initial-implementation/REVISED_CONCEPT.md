@@ -6,6 +6,7 @@
 
 The library is infrastructure. It owns the socket, the JSON, and the types. It does not own policy, planning, persistence, or UI. Any Nim program that needs to talk to Niri should be able to depend on this package alone.
 
+
 ## 2. Why It Exists
 
 - **One protocol implementation.** Every Nim tool that talks to Niri should share one decode/encode path. Protocol bugs get fixed once.
