@@ -1,8 +1,4 @@
-nimcache/
-nimblecache/
-htmldocs/
-*.exe
-*.dll
-*.so
-*.dylib
-tests/nimcache/
+.devenv/
+*.db
+*.db-shm
+*.db-wal

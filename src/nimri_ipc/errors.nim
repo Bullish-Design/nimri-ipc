@@ -27,7 +27,7 @@ proc truncateSnippet(s: string, maxLen = 200): string =
   else:
     s[0 ..< maxLen] & "..."
 
-proc mk(kind: NimriIpcErrorKind, message, operation = "", detail = ""): NimriIpcError =
+proc mk(kind: NimriIpcErrorKind, message: string, operation = "", detail = ""): NimriIpcError =
   NimriIpcError(kind: kind, message: message, operation: operation, detail: detail)
 
 proc socketPathMissing*(): NimriIpcError =
