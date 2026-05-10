@@ -1,0 +1,1 @@
+{"Ok":{"FocusedOutput":{"name":"eDP-1","make":"ACME","model":"Panel","serial":null,"modes":[{"width":1920,"height":1080,"refresh_rate":60000,"is_preferred":true}],"current_mode":0,"vrr_supported":false,"vrr_enabled":false,"logical":{"x":0,"y":0,"width":1920,"height":1080,"scale":1.0,"transform":"Normal"}}}}

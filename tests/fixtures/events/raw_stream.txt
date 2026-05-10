@@ -1,0 +1,3 @@
+{"WorkspacesChanged":{"workspaces":[]}}
+{"WindowsChanged":{"windows":[]}}
+{"WindowClosed":{"id":1}}
