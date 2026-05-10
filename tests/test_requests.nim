@@ -60,3 +60,11 @@ suite "requests tests":
 
   test "action request nesting":
     check toJson(requestAction(actions.quit())) == parseJson("""{"Action":{"Quit":{"skip_confirmation":false}}}""")
+    check toJson(requestAction(screenshot(showPointer = true))) ==
+      parseJson("""{"Action":{"Screenshot":{"show_pointer":true,"path":null}}}""")
+    check toJson(requestAction(setDynamicCastMonitor(some("eDP-1")))) ==
+      parseJson("""{"Action":{"SetDynamicCastMonitor":{"output":"eDP-1"}}}""")
+    check toJson(requestAction(focusMonitor("HDMI-A-1"))) ==
+      parseJson("""{"Action":{"FocusMonitor":{"output":"HDMI-A-1"}}}""")
+    check toJson(requestAction(moveWindowToWorkspaceDown(focus = true))) ==
+      parseJson("""{"Action":{"MoveWindowToWorkspaceDown":{"focus":true}}}""")
