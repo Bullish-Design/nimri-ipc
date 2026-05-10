@@ -1,0 +1,7 @@
+/home/andrew/Documents/Projects/nimri-ipc/.devenv/flake.json
+/home/andrew/Documents/Projects/nimri-ipc/.devenv.flake.nix
+/home/andrew/Documents/Projects/nimri-ipc/.env
+/home/andrew/Documents/Projects/nimri-ipc/devenv.local.nix
+/home/andrew/Documents/Projects/nimri-ipc/devenv.lock
+/home/andrew/Documents/Projects/nimri-ipc/devenv.nix
+/home/andrew/Documents/Projects/nimri-ipc/devenv.yaml

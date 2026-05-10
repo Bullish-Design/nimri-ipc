@@ -1,7 +1,7 @@
 # 02 Initial Implementation Progress
 
 - [x] Step 0 scaffold
-- [ ] Step 1 errors
+- [x] Step 1 errors
 - [ ] Step 2 codec
 - [ ] Step 3 models
 - [ ] Step 4 requests
