@@ -74,13 +74,50 @@ type
     else: discard
 
 const ActionWireNames*: array[NiriActionKind, string] = [
-  "FocusWindowDown", "FocusWindowUp", "FocusColumnLeft", "FocusColumnRight",
-  "MoveWindowDown", "MoveWindowUp", "MoveColumnLeft", "MoveColumnRight",
-  "Quit", "ToggleOverview", "Screenshot", "PowerOffMonitors",
-  "CloseWindow", "FullscreenWindow", "SetWindowWidth", "SetWindowHeight",
-  "Spawn", "SpawnSh", "FocusWorkspace", "MoveWindowToWorkspace",
-  "SwitchLayout", "SetColumnDisplay", "MoveFloatingWindow"
+  "Quit", "PowerOffMonitors", "PowerOnMonitors", "Spawn", "SpawnSh",
+  "DoScreenTransition", "LoadConfigFile", "ShowHotkeyOverlay", "ToggleKeyboardShortcutsInhibit",
+  "Screenshot", "ScreenshotScreen", "ScreenshotWindow",
+  "CloseWindow", "FullscreenWindow", "ToggleWindowedFullscreen", "FocusWindow", "FocusWindowInColumn",
+  "FocusWindowPrevious", "FocusWindowDown", "FocusWindowUp", "FocusWindowTop", "FocusWindowBottom",
+  "FocusWindowDownOrTop", "FocusWindowUpOrBottom", "FocusWindowDownOrColumnLeft", "FocusWindowDownOrColumnRight",
+  "FocusWindowUpOrColumnLeft", "FocusWindowUpOrColumnRight", "FocusWindowOrMonitorUp", "FocusWindowOrMonitorDown",
+  "FocusWindowOrWorkspaceDown", "FocusWindowOrWorkspaceUp",
+  "FocusColumnLeft", "FocusColumnRight", "FocusColumnFirst", "FocusColumnLast", "FocusColumnRightOrFirst",
+  "FocusColumnLeftOrLast", "FocusColumn", "FocusColumnOrMonitorLeft", "FocusColumnOrMonitorRight",
+  "MoveWindowDown", "MoveWindowUp", "MoveWindowDownOrToWorkspaceDown", "MoveWindowUpOrToWorkspaceUp",
+  "ConsumeOrExpelWindowLeft", "ConsumeOrExpelWindowRight", "ConsumeWindowIntoColumn", "ExpelWindowFromColumn",
+  "SwapWindowRight", "SwapWindowLeft",
+  "MoveColumnLeft", "MoveColumnRight", "MoveColumnToFirst", "MoveColumnToLast", "MoveColumnLeftOrToMonitorLeft",
+  "MoveColumnRightOrToMonitorRight", "MoveColumnToIndex", "ToggleColumnTabbedDisplay", "SetColumnDisplay",
+  "CenterColumn", "CenterWindow", "CenterVisibleColumns", "MaximizeColumn", "SetColumnWidth",
+  "ExpandColumnToAvailableWidth", "SwitchPresetColumnWidth", "SwitchPresetColumnWidthBack",
+  "SetWindowWidth", "SetWindowHeight", "ResetWindowHeight", "SwitchPresetWindowWidth", "SwitchPresetWindowWidthBack",
+  "SwitchPresetWindowHeight", "SwitchPresetWindowHeightBack", "MaximizeWindowToEdges",
+  "SwitchLayout",
+  "FocusWorkspaceDown", "FocusWorkspaceUp", "FocusWorkspace", "FocusWorkspacePrevious",
+  "MoveWindowToWorkspaceDown", "MoveWindowToWorkspaceUp", "MoveWindowToWorkspace",
+  "MoveColumnToWorkspaceDown", "MoveColumnToWorkspaceUp", "MoveColumnToWorkspace",
+  "MoveWorkspaceDown", "MoveWorkspaceUp", "MoveWorkspaceToIndex", "SetWorkspaceName", "UnsetWorkspaceName",
+  "FocusMonitorLeft", "FocusMonitorRight", "FocusMonitorDown", "FocusMonitorUp", "FocusMonitorPrevious",
+  "FocusMonitorNext", "FocusMonitor",
+  "MoveWindowToMonitorLeft", "MoveWindowToMonitorRight", "MoveWindowToMonitorDown", "MoveWindowToMonitorUp",
+  "MoveWindowToMonitorPrevious", "MoveWindowToMonitorNext", "MoveWindowToMonitor",
+  "MoveColumnToMonitorLeft", "MoveColumnToMonitorRight", "MoveColumnToMonitorDown", "MoveColumnToMonitorUp",
+  "MoveColumnToMonitorPrevious", "MoveColumnToMonitorNext", "MoveColumnToMonitor",
+  "MoveWorkspaceToMonitorLeft", "MoveWorkspaceToMonitorRight", "MoveWorkspaceToMonitorDown", "MoveWorkspaceToMonitorUp",
+  "MoveWorkspaceToMonitorPrevious", "MoveWorkspaceToMonitorNext", "MoveWorkspaceToMonitor",
+  "ToggleWindowFloating", "MoveWindowToFloating", "MoveWindowToTiling", "FocusFloating", "FocusTiling",
+  "SwitchFocusBetweenFloatingAndTiling", "MoveFloatingWindow",
+  "ToggleWindowRuleOpacity",
+  "SetDynamicCastWindow", "SetDynamicCastMonitor", "ClearDynamicCastTarget", "StopCast",
+  "ToggleOverview", "OpenOverview", "CloseOverview",
+  "ToggleWindowUrgent", "SetWindowUrgent", "UnsetWindowUrgent",
+  "ToggleDebugTint", "DebugToggleOpaqueRegions", "DebugToggleDamage"
 ]
+
+static:
+  assert ActionWireNames.len == ord(high(NiriActionKind)) + 1,
+    "ActionWireNames must cover every NiriActionKind variant"
 
 proc focusWindowDown*(): NiriAction = NiriAction(kind: naFocusWindowDown)
 proc focusWindowUp*(): NiriAction = NiriAction(kind: naFocusWindowUp)
